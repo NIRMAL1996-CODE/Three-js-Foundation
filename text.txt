@@ -1,0 +1,200 @@
+ 1. Scene
+ This line only creates the scene.Later we add objects, lights, and camera to it, but this line itself just makes the empty stage.Without a scene, Three.js doesn’t know where to put objects or lights.
+
+ 2. Camera = eyes (tells Three.js what to display and from which angle)
+ Your eye = camera
+ The position you stand = camera.position
+ The wall or room = scene
+ Whatever the camera “sees” from its position is what shows on your laptop screen
+ Camera exists even without position, but by default it’s at (0,0,0).
+
+
+ If objects are also at (0,0,0), camera is inside them → you can’t see anything.
+ So we set position to step back and see the scene properly.
+ camera.position is an object with x, y, z coordinates.
+  camera.position.z = 5 moves backward.
+  You can also move x (left/right) and y (up/down) to see the scene from different angles.
+  The camera always looks toward the scene origin (0,0,0) by default.
+
+## PerspectiveCamera lets you set FOV, aspect, near, far for a realistic 3D view.
+If you want flat view (no perspective), you can use OrthographicCamera instead.
+You usually give all four everytime u create camera: fov, aspect, near, far
+Some are required (fov and aspect), near and far have default values, but it’s better to set them for correct view and performance.
+  fov → field of view (how wide)
+  aspect → screen shape
+  near → closest distance camera can see
+  far → farthest distance camera can see
+
+Camera position = where the camera is standing (so it can see the objects).
+Near & far = the closest and farthest distances the camera can see.
+Even though defaults exist, it’s better to set them so objects are clearly visible and rendering works correctly.
+
+  X (left/right) and Y (up/down) are 0 by default, so camera stays centered horizontally and vertically.
+  camera.position.x → moves camera left/right
+  camera.position.y → moves camera up/down
+  camera.position.z → moves camera forward/backward
+
+  webGL:-
+  THREE.WebGLRenderer() is all you need to create a renderer that uses WebGL.
+  Later you set its size and attach it to the HTML to show the scene.
+  Three.js handles all the WebGL details internally, so you don’t write WebGL code yourself.
+  WebGL (Web Graphics Library) is a technology that allows your browser to draw 3D graphics directly on the screen using your computer’s GPU (graphics processor). We use WebGL in Three.js because it makes 3D rendering fast, works in any modern browser, and lets us display complex 3D scenes without needing extra software. Three.js handles all the WebGL details for us, so we can create 3D graphics easily.
+
+
+A canvas is a rectangular area on a webpage where you can draw graphics using JavaScript. In Three.js, the canvas acts like a painting board where the renderer draws the 3D scene. You can set its size to any dimensions, and it can even cover the full screen, but it’s still just an HTML element inside your webpage.
+
+ renderer.setSize(width, height) → sets the size of the canvas where the scene will be drawn. setSize → tells the renderer how big the canvas should be
+
+ (MyScreen)window.innerWidth / innerHeight → makes canvas full screen.window.innerWidth = width of the browser window ------window.innerHeight = height of the browser window
+then:
+ appendChild → adds it to the HTML so you can see it on screen.
+
+
+ THREE.WebGLRenderer() → creates a renderer variable with WebGL power.
+  renderer.setSize() → sets canvas size.
+  renderer.domElement → gives the HTML <canvas> created by the renderer.
+  document.body.appendChild(renderer.domElement) → adds canvas to your page so you can see the 3D scene.
+  renderer.domElement always points to the <canvas> that the renderer created.
+  You can use it to add to HTML, style, or manipulate the canvas.
+
+   With renderer you can also:
+      Change background color → renderer.setClearColor(0x000000)
+      Enable shadows → renderer.shadowMap.enabled = true
+      Control pixel ratio → renderer.setPixelRatio(window.devicePixelRatio)
+      Render the scene → renderer.render(scene, camera)
+      Clear the canvas → renderer.clear()
+      So it’s like a tool with many functions to control how the scene is drawn
+
+  SHAPE:-
+      WebGL = low-level tool to draw 3D graphics.
+      Three.js = makes it easy for us.
+      So instead of writing raw WebGL code to draw a cube, we just do:
+      const geometry = new THREE.BoxGeometry();
+      Three.js creates the vertices, edges, faces for the cube in WebGL internally.
+      So Geometry = an easy way to tell WebGL what shape to draw.    
+
+
+## Here’s the usual process in Three.js:
+
+  Create Geometry → decide the shape (cube, sphere, etc.)
+  const geometry = new THREE.BoxGeometry();
+
+  Create Material → decide how it looks (color, texture, etc.)
+  const material = new THREE.MeshBasicMaterial({ color: "white" });
+
+  Create Mesh → combine geometry + material to make a visible.
+   (object.Mesh = the visible 3D object in Three.js.)
+  const cube = new THREE.Mesh(geometry, material);
+
+  Add to Scene → so the object appears in the scene
+  scene.add(cube)
+
+    So shape first, look second, then combine, then add.     
+
+## function animate() → function to update and render objects repeatedly for movement.
+requestAnimationFrame(animate) → built-in JS function that calls animate() every frame for smooth animation.
+cube.rotation.x += 0.01 → rotates the cube; .rotation is Three.js, += 0.01 is JS.
+Mesh = geometry + material, the visible object in the scene.
+Radians = unit for angles in Three.js (360° = 2π radians).
+renderer.render(scene, camera) → draws the scene on the canvas from the camera’s view.
+render() = in-built method of WebGLRenderer, paints the objects on screen.    
+
+
+
+Three.js Basics
+1. Scene
+  const scene = new THREE.Scene();
+  Creates the scene (like a stage).
+  Later we add objects, lights, and camera to it.
+  Without a scene, Three.js doesn’t know where to place objects or lights.
+
+2. Camera
+    Think of the camera as your eyes:
+    Your eye = camera
+    The position you stand = camera.position
+    The wall or room = scene
+    Whatever the camera sees is displayed on your screen.
+    Default position is (0,0,0).
+    If objects are also at (0,0,0), the camera is inside them, so you can’t see anything.
+    Use camera.position.z = 5 to step back and view the scene properly.
+    Camera coordinates:
+    camera.position.x → left/right
+    camera.position.y → up/down
+    camera.position.z → forward/backward
+    PerspectiveCamera
+    Lets you set FOV, aspect, near, far for realistic 3D view.
+
+Parameters:
+  fov → field of view (how wide)
+  aspect → screen shape
+  near → closest distance camera can see
+  far → farthest distance camera can see
+  Even though defaults exist, it’s better to set all four for correct rendering.
+  Camera position = where the camera stands.
+  Near & far = closest and farthest distances the camera can see.
+  If you want a flat view (no perspective), you can use OrthographicCamera instead.
+
+3. Renderer
+  const renderer = new THREE.WebGLRenderer();
+  Creates a renderer variable that uses WebGL to draw the scene.
+  WebGL (Web Graphics Library):
+  Allows your browser to draw 3D graphics directly using GPU.
+  Fast, works in modern browsers, handles complex scenes.
+
+Canvas:
+  A rectangular area in HTML where graphics are drawn.
+  Three.js draws the 3D scene on this canvas.
+  Can set size with:
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+
+Add to HTML:
+  document.body.appendChild(renderer.domElement);
+  renderer.domElement always points to the canvas.
+
+Renderer Features
+  Change background color → renderer.setClearColor(0x000000)
+  Enable shadows → renderer.shadowMap.enabled = true
+  Control pixel ratio → renderer.setPixelRatio(window.devicePixelRatio)
+  Render scene → renderer.render(scene, camera)
+  Clear canvas → renderer.clear()
+
+4. Geometry (Shape)
+  WebGL is low-level; Three.js makes it easy.
+  Example:
+  const geometry = new THREE.BoxGeometry();
+  Three.js creates vertices, edges, faces for the cube internally.
+  Geometry defines what shape to draw.
+
+5. Material (Look)
+  Decide how the shape looks (color, texture, shading).
+  Example:
+  const material = new THREE.MeshBasicMaterial({ color: "white" });
+
+6. Mesh (Visible Object)
+  Mesh = Geometry + Material → what you actually see in the scene.
+  Example:
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+
+7.Process in Three.js:
+  Create Geometry → shape
+  Create Material → look
+  Create Mesh → combine shape + look
+  Add to Scene → make it visible
+
+8. Animation
+  Use a function to update and render objects repeatedly.
+  function animate() {
+    requestAnimationFrame(animate);
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+}
+animate();
+Notes:
+  requestAnimationFrame(animate) → built-in JS function, calls animate every frame.
+  cube.rotation → rotates the cube; .rotation is Three.js, += 0.01 is JS.
+  Radians = unit for angles (360° = 2π radians).
+  renderer.render(scene, camera) → draws the scene from the camera’s view.
+  render() is in-built in WebGLRenderer, paints objects on screen.
