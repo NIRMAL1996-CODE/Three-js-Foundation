@@ -33,7 +33,7 @@ scene.add( starsphere );
 const radius =1.2;
 const orbitRadius =3.1;
 const segments =62;
-const textures = ["mars.jpg","earth2.jpg", "venus.jpg", "mercury.jpg"];
+const textures = ["mars.jpg","earth2.jpg", "venus.jpg", "mercury.jpg",];
 
 const spheres = new THREE.Group();
 const spheresMesh=[];
