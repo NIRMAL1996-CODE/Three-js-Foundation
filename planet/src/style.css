@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+body{
+  height: 100%;
+}
+canvas {
+  position: absolute; /* makes it layerable */
+  top: 0;
+  left: 0;
+  z-index: 1;        /* behind text if text z=2 */
+}
