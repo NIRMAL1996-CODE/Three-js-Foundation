@@ -6,11 +6,10 @@ import { gsap } from "gsap";
 import './style.css';
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(25, window.innerWidth/window.innerHeight, 0.1, 1000);
-camera.position.z= 25;
-camera.position.y=0.1
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
+camera.position.z= 15;
+camera.position.y=-0.6
 camera.position.x=0.1
-// camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth , window.innerHeight);
@@ -28,12 +27,12 @@ const hdri= new RGBELoader().load('https://dl.polyhaven.org/file/ph-assets/HDRIs
 
 const startexture = new THREE.TextureLoader().load("star.jpg");
 startexture.colorSpace= THREE.SRGBColorSpace; 
-const stargeometry = new THREE.SphereGeometry( 10, 64, 64); 
+const stargeometry = new THREE.SphereGeometry( 20, 64, 64); 
 const starmaterial = new THREE.MeshStandardMaterial({map: startexture,side: THREE.BackSide }); 
 const starsphere = new THREE.Mesh( stargeometry, starmaterial );
 scene.add( starsphere );
 
-const radius =3;
+const radius =3.3;
 const orbitRadius =9;
 const segments = 62;
 const textures = ["mercury.jpg","mars.jpg","earth2.jpg", "neptune.jpg","jupiter.jpg","venus.jpg",];
