@@ -26,7 +26,7 @@ const mouse ={
 
 window.addEventListener("mousemove", function(e){
   mouse.x= e.clientX /window.innerWidth;
-  mouse.y= e.clientY / this.window.innerHeight;
+  mouse.y= e.clientY /window.innerHeight;
 
   // console.log(e.clientX);
 });
@@ -34,7 +34,7 @@ window.addEventListener("mousemove", function(e){
 // detects when the browser window size changes.
 window.addEventListener("resize",function(e){
   // Keeps the 3D view proportions correct.
-  camera.aspect =this.window.innerWidth/ this.window.innerHeight;
+  camera.aspect =window.innerWidth/ window.innerHeight;
   // Makes the canvas fill the screen.
   renderer.setSize(window.innerWidth, window.innerHeight);
   // Applies the new aspect ratio to the camera.
