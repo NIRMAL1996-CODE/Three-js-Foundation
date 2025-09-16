@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/style.css">
+    <title>Animation</title>
+  </head>
+    <body class="bg-black text-white overflow-hidden">
+    <nav class="fixed top-0 left-0 w-full p-4 text-center transform -translate-y-full">
+      <ul class="flex justify-center space-x-8">
+        <li class="hover:text-red-500 cursor-pointer">Home</li>
+        <li class="hover:text-red-500 cursor-pointer">About</li>
+        <li class="hover:text-red-500 cursor-pointer">Contact</li>
+      </ul>
+    </nav>
+  <h1 class="title absolute bottom-1/9 w-full text-center text-5xl opacity-0">Welcome to My 3D Page</h1>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
