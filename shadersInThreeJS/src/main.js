@@ -11,7 +11,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.PlaneGeometry(2, 3, 100, 100);
+const textureLoader = new THREE.TextureLoader();
+let flagTexture =textureLoader.load("/dominos.png");
+
+const geometry = new THREE.PlaneGeometry(3, 2, 100, 100);
 const material = new THREE.ShaderMaterial({
   vertexShader,
   fragmentShader,
@@ -19,9 +22,11 @@ const material = new THREE.ShaderMaterial({
   uniforms:{
     uTime:{
       value:0,
-    }
+    },
+    uTexture: { value: flagTexture }
   }
 });
+
 
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
