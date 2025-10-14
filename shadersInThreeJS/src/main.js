@@ -19,6 +19,7 @@ const material = new THREE.ShaderMaterial({
   vertexShader,
   fragmentShader,
   side: THREE.DoubleSide,
+  wireframe:true,
   uniforms:{
     uTime:{
       value:0,
