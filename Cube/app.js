@@ -19,6 +19,22 @@ const material = new THREE.MeshBasicMaterial({ color:"white"});
 const cube = new THREE.Mesh(geometry, material);
 cube.position.z = 2;
 
+// methods = ways to change or get info about that vector.
+// cube.position.set(1, 2, -2);  
+// // set(x, y, z) → sets the cube’s position in 3D space
+
+// console.log(cube.position.length());  
+// // length() → gives distance from origin (0,0,0) → √(x² + y² + z²)
+
+// console.log(cube.position.distanceTo(new THREE.Vector3(0, 0, 0)));  
+// // distanceTo(vector) → gives distance between cube’s position and given vector point
+
+// console.log(cube.position.normalize());  
+// // normalize() → converts position vector to unit length (makes its length = 1) but keeps direction same
+
+
+
+
 scene.add(cube);
 
 // 5. Animate
