@@ -13,7 +13,8 @@ document.body.appendChild(renderer.domElement);
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({ color:"red"});
 const cube = new THREE.Mesh(geometry, material);
-cube.position.z = 1;
+// cube.position.z = 1;
+cube.position.set(0,0,0);
 scene.add(cube);
 
 const controls = new OrbitControls( camera, renderer.domElement );
