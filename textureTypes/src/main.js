@@ -11,8 +11,8 @@ camera.position.z = 2;
 // Renderer
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
-
 
 // Load Texture
 const loader = new THREE.TextureLoader();
@@ -32,6 +32,7 @@ const box = new THREE.Mesh(
     //  bumpScale: 2 ,
      metalnessMap: metalTexture,
      metalness: 1,
+     roughness: 1 
     //   aoMap: aoTexture,
     // aoMapIntensity: 1
  })
@@ -46,11 +47,21 @@ scene.add(light);
 const ambient = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambient);
 
+// detects when the browser window size changes.
+window.addEventListener("resize",function(e){
+  // Keeps the 3D view proportions correct.
+  camera.aspect =window.innerWidth/ window.innerHeight;
+  // Makes the canvas fill the screen.
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  // Applies the new aspect ratio to the camera.
+  camera.updateProjectionMatrix();
+})
+
 // Animate
 function animate() {
   requestAnimationFrame(animate);
-  // box.rotation.y += 0.01;
-  // box.rotation.x += 0.01;
+  box.rotation.y += 0.01;
+  box.rotation.x += 0.01;
 
   renderer.render(scene, camera);
 }
