@@ -19,17 +19,24 @@ loader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   
   const geometry = new TextGeometry("Hello Nirmal", {
     font: font,
-     size: 1,
-	   depth: 0.2,
-	   curveSegments: 12
+     size: 0.8,
+	   depth: 0.9,
+	   curveSegments: 12,
+     bevelEnabled:true,
+     bevelSegment:1,
+     bevelThickness:0.3,
+     bevelOffset:0,
+     bevelSize:0.02
+
   });
   geometry.center();
 
-  const material = new THREE.MeshBasicMaterial({ color: "pink" });
+  const material = new THREE.MeshNormalMaterial();
   textMesh = new THREE.Mesh(geometry, material);
   scene.add(textMesh);
 });
 
+//responsive
 window.addEventListener("resize",function(e){
   // Keeps the 3D view proportions correct.
   camera.aspect =window.innerWidth/ window.innerHeight;
@@ -44,8 +51,7 @@ controls.enableDamping= true;
 
 function animate() {
   requestAnimationFrame(animate);
-   controls.update();
-  textMesh.rotation.y += 0.01;
+  controls.update();
   renderer.render(scene, camera);
 }
 animate();
