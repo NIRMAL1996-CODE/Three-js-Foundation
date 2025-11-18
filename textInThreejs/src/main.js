@@ -15,29 +15,46 @@ document.body.appendChild(renderer.domElement);
 
 let textMesh;
 const loader = new FontLoader();
+const material = new THREE.MeshNormalMaterial();
 loader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   
-  const geometry = new TextGeometry("Hello Nirmal", {
-    font: font,
-     size: 0.8,
-	   depth: 0.9,
+const geometry = new TextGeometry("Hello Nirmal", {
+     font: font,
+     size: 1,
+	   depth: 0.2,
 	   curveSegments: 12,
      bevelEnabled:true,
      bevelSegment:1,
-     bevelThickness:0.3,
+     bevelThickness:0.05,
      bevelOffset:0,
-     bevelSize:0.02
-
+     bevelSize:0.02,
   });
-  geometry.center();
 
-  const material = new THREE.MeshNormalMaterial();
+  geometry.center();
   textMesh = new THREE.Mesh(geometry, material);
   scene.add(textMesh);
 });
 
-//responsive
-window.addEventListener("resize",function(e){
+const geometry = new THREE.TorusGeometry(0.3,0.2,20,45);
+
+for(let i=0; i<=200;i++){
+const donut = new THREE.Mesh(geometry, material);
+donut.position.x=(Math.random()-0.5)*20;
+donut.position.y=(Math.random()-0.5)*20;
+donut.position.z=(Math.random()-0.5)*20;
+
+donut.rotation.x= Math.random()* Math.PI;
+donut.rotation.y= Math.random()* Math.PI;
+
+let scale= Math.random();
+donut.scale.set(scale,scale,scale);
+
+scene.add(donut);
+}
+
+
+  //responsive
+  window.addEventListener("resize",function(e){
   // Keeps the 3D view proportions correct.
   camera.aspect =window.innerWidth/ window.innerHeight;
   // Makes the canvas fill the screen.
