@@ -37,8 +37,6 @@ scene.add(doorLight);
 
 const texture =new THREE.TextureLoader();
 
-
-
 const geometry = new THREE.PlaneGeometry(20,20);
 const material = new THREE.MeshStandardMaterial({ color:"#a8e6a1"});
 const floor = new THREE.Mesh(geometry, material);
@@ -104,13 +102,6 @@ scene.add(graves);
   graves.add(grave);
 }
   
-
-
-
-
-
-
-
 window.addEventListener("resize",function(e){
   camera.aspect =window.innerWidth/ window.innerHeight;
   renderer.setSize(window.innerWidth, window.innerHeight);
