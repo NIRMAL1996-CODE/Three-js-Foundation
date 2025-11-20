@@ -30,10 +30,12 @@ scene.add( light );
 const directional = new THREE.DirectionalLight("#3a4cfe", 0.6);
 directional.position.set(0, 5, -2);
 directional.intensity = 1.2; 
+directional.castShadow= true;
 scene.add(directional);
 
 const doorLight = new THREE.PointLight("#ff4b1f", 3.5, 7); 
 doorLight.position.set(0, 2.4, 2.7); // front of door
+doorLight.castShadow= true;
 scene.add(doorLight);
 
 
@@ -56,12 +58,10 @@ const material = new THREE.MeshStandardMaterial({
   normalMap: grassNormal,
 });
 const floor = new THREE.Mesh(geometry, material);
-grassColor.wrapS = grassColor.wrapT = THREE.RepeatWrapping;
-grassNormal.wrapS = grassNormal.wrapT = THREE.RepeatWrapping;
-
-grassColor.repeat.set(8, 8);
-grassNormal.repeat.set(8, 8);
-
+  grassColor.wrapS = grassColor.wrapT = THREE.RepeatWrapping;
+  grassNormal.wrapS = grassNormal.wrapT = THREE.RepeatWrapping;
+  grassColor.repeat.set(8, 8);
+  grassNormal.repeat.set(8, 8);
 floor.rotation.x = -Math.PI /2; 
 floor.position.y = -0.01; 
 scene.add(floor);
@@ -133,6 +133,20 @@ scene.add(graves);
   grave.rotation.z=(Math.random() -0.5 )*0.4;
   graves.add(grave);
 }
+
+// ghost light (global)
+const ghost1 = new THREE.PointLight("#ff00ff", 2, 3);
+ghost1.castShadow= true;
+scene.add(ghost1);
+
+const ghost2 = new THREE.PointLight("#00ffff", 2, 3);
+ghost2.castShadow= true;
+scene.add(ghost2);
+
+const ghost3 = new THREE.PointLight("#ffff00", 2, 3);
+ghost3.castShadow= true;
+scene.add(ghost3);
+
   
 window.addEventListener("resize",function(e){
   camera.aspect =window.innerWidth/ window.innerHeight;
@@ -140,7 +154,25 @@ window.addEventListener("resize",function(e){
   camera.updateProjectionMatrix();
   })
 
+const clock = new THREE.Clock(); // (Clock = timer)
+
 function animate() {
+  const time = clock.getElapsedTime(); 
+  const ghostangle1= time * 0.5
+  ghost1.position.x = Math.cos(ghostangle1) * 4;
+  ghost1.position.z = Math.sin(ghostangle1) * 4;
+  ghost1.position.y = Math.sin(time * 3);
+
+  const ghostangle2= -time * 0.32
+  ghost2.position.x = Math.cos(ghostangle2) * 5;
+  ghost2.position.z = Math.sin(ghostangle2) * 5;
+  ghost2.position.y = Math.sin(time* 4) + Math.sin(time* 2.5) ;
+
+  const ghostangle3= -time * 0.18
+  ghost3.position.x = Math.cos(ghostangle3) * ( 7 + Math.sin(time* 0.32));
+  ghost3.position.z = Math.sin(ghostangle3) * ( 7 + Math.sin(time * 0.5));
+  ghost3.position.y = Math.sin(time * 4) + Math.sin(time * 2.5) ;
+
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);
