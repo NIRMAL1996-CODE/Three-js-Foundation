@@ -23,7 +23,7 @@ scene.fog= fog;
 const house = new THREE.Group();
 scene.add(house);
 
-const light = new THREE.AmbientLight("#0d0f26", 0.5);
+const light = new THREE.AmbientLight("#0d0f26", 1.5);
 light.position.set(2,2,2)
 scene.add( light );
 
@@ -33,16 +33,9 @@ directional.intensity = 1.2;
 scene.add(directional);
 
 const doorLight = new THREE.PointLight("#ff4b1f", 3.5, 7); 
-doorLight.position.set(0, 2.4, 2.4); // front of door
+doorLight.position.set(0, 2.4, 2.7); // front of door
 scene.add(doorLight);
 
-
-const geometry = new THREE.PlaneGeometry(20,20);
-const material = new THREE.MeshStandardMaterial({ color:"#a8e6a1"});
-const floor = new THREE.Mesh(geometry, material);
-floor.rotation.x = -Math.PI /2; 
-floor.position.y = -0.01; 
-scene.add(floor);
 
 const loader = new THREE.TextureLoader();
 const colorTex       = loader.load("./colorwall.jpeg");        // main photo
@@ -50,6 +43,28 @@ const normalTex      = loader.load("./normalwall.jpeg");       // fake bumps
 const roughnessTex   = loader.load("./roughwall.jpeg");    // shiny/dull
 const displacementTex= loader.load("./displacewall.jpeg");       // real bumps
 const aoTex          = loader.load("./ambientwall.jpeg");   
+const doorcolor =loader.load("./door.jpeg"); 
+const normaldoor =loader.load("./normaldoor.jpeg"); 
+const grassColor = loader.load("./grasscolor.jpeg");
+const grassNormal = loader.load("./grassnormal.jpeg");
+const bushColor = loader.load("./bushcolor.jpeg");
+
+
+const geometry = new THREE.PlaneGeometry(20,20);
+const material = new THREE.MeshStandardMaterial({ 
+  map: grassColor,
+  normalMap: grassNormal,
+});
+const floor = new THREE.Mesh(geometry, material);
+grassColor.wrapS = grassColor.wrapT = THREE.RepeatWrapping;
+grassNormal.wrapS = grassNormal.wrapT = THREE.RepeatWrapping;
+
+grassColor.repeat.set(8, 8);
+grassNormal.repeat.set(8, 8);
+
+floor.rotation.x = -Math.PI /2; 
+floor.position.y = -0.01; 
+scene.add(floor);
 
 const wallgeometry= new THREE.BoxGeometry(4,2.5,4);
 const wallmaterial= new THREE.MeshStandardMaterial({
@@ -70,15 +85,19 @@ roof.position.y = 2.5 +1;
 roof.rotation.y = Math.PI /4; 
 house.add(roof);
 
-const doorgeometry= new THREE.PlaneGeometry(2,2);
-const doormaterial= new THREE.MeshStandardMaterial({color:"#5a3e2b"});
+const doorgeometry= new THREE.PlaneGeometry(1.5,2);
+const doormaterial= new THREE.MeshStandardMaterial({
+  map: doorcolor,
+  normalMap: normaldoor,
+  color:"gray"
+});
 const door = new THREE.Mesh(doorgeometry, doormaterial);
 door.position.z = 2.01;
 door.position.y = 1;
 house.add(door);
 
 const bushgeometry= new THREE.SphereGeometry(0.5, 16, 16);
-const bushMaterial= new THREE.MeshStandardMaterial({color: "#2e8b57" });
+const bushMaterial= new THREE.MeshStandardMaterial({color: "#2e8b57",map:bushColor });
 const bush1 = new THREE.Mesh(bushgeometry,bushMaterial);
 bush1.position.set(-1.6, 0.2, 2.3); 
 bush1.scale.set(0.5,0.5,0.5)
