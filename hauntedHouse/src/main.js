@@ -28,14 +28,14 @@ light.position.set(2,2,2)
 scene.add( light );
 
 const directional = new THREE.DirectionalLight("#3a4cfe", 0.6);
-directional.position.set(4, 5, -2);
+directional.position.set(0, 5, -2);
+directional.intensity = 1.2; 
 scene.add(directional);
 
 const doorLight = new THREE.PointLight("#ff4b1f", 3.5, 7); 
 doorLight.position.set(0, 2.4, 2.4); // front of door
 scene.add(doorLight);
 
-const texture =new THREE.TextureLoader();
 
 const geometry = new THREE.PlaneGeometry(20,20);
 const material = new THREE.MeshStandardMaterial({ color:"#a8e6a1"});
@@ -44,8 +44,21 @@ floor.rotation.x = -Math.PI /2;
 floor.position.y = -0.01; 
 scene.add(floor);
 
+const loader = new THREE.TextureLoader();
+const colorTex       = loader.load("./colorwall.jpeg");        // main photo
+const normalTex      = loader.load("./normalwall.jpeg");       // fake bumps
+const roughnessTex   = loader.load("./roughwall.jpeg");    // shiny/dull
+const displacementTex= loader.load("./displacewall.jpeg");       // real bumps
+const aoTex          = loader.load("./ambientwall.jpeg");   
+
 const wallgeometry= new THREE.BoxGeometry(4,2.5,4);
-const wallmaterial= new THREE.MeshStandardMaterial({color:"#f2d7b5"});
+const wallmaterial= new THREE.MeshStandardMaterial({
+  map: colorTex,
+  normalMap: normalTex,
+  roughnessMap: roughnessTex,
+  displacementMap: displacementTex,
+  aoMap: aoTex,
+  displacementScale: 0 });
 const walls = new THREE.Mesh(wallgeometry, wallmaterial);
 walls.position.y = 2.5 /2 ;
 house.add(walls);
