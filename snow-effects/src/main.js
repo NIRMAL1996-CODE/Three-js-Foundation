@@ -43,9 +43,17 @@ const snow = new THREE.Points(geometry, material);
 scene.add(snow);
 
 const controls = new OrbitControls(camera, renderer.domElement);
+const clock = new THREE.Clock(); 
 
 function animate() {
   requestAnimationFrame(animate);
+  const t = clock.getElapsedTime(); 
+    for(let i =0; i<count; i++){
+    const i3 =i*3;
+    const x= geometry.attributes.position.array[i3];
+    geometry.attributes.position.array[i3 +1 ]= Math.sin(t + x);
+    geometry.attributes.position.needsUpdate=true;
+  }
   controls.update();
   renderer.render( scene, camera );
 }
