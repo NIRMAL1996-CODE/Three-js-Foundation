@@ -11,7 +11,7 @@ const scene = new THREE.Scene();
 
 //Camera
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-camera.position.z=2;
+camera.position.z=4;
 
 //Renderer
 const renderer = new THREE.WebGLRenderer();
@@ -49,9 +49,9 @@ const generateGalaxy =()=>{
       const spinAngle =radius * parameter.spin;
       const branchAngle = (i% parameter.branches)/ parameter.branches * Math.PI *2
       
-      const rondomX= (Math.random() - 0.5) * parameter.randomness* radius;
-      const rondomY= (Math.random() - 0.5) * parameter.randomness* radius;
-      const rondomZ= (Math.random() - 0.5) * parameter.randomness* radius;
+      const rondomX= (Math.random() - 0.5) * parameter.randomness;
+      const rondomY= (Math.random() - 0.5) * parameter.randomness;
+      const rondomZ= (Math.random() - 0.5) * parameter.randomness;
 
       positions[i3 + 0] = Math.cos(branchAngle + spinAngle)*radius +rondomX;
       positions[i3 + 1] = rondomY;
@@ -64,7 +64,8 @@ geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
    size: parameter.size,        
    sizeAttenuation: true,  
    depthWrite:false,      
-   blending:THREE.AdditiveBlending, 
+   blending:THREE.AdditiveBlending,
+   color:"pink" 
 });
   
  points = new THREE.Points(geometry, material);
