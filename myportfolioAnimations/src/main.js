@@ -1,4 +1,5 @@
 import "./style.css";
+import gsap from "gsap";
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import GUI from 'lil-gui';
@@ -75,7 +76,7 @@ scene.add(mesh1,mesh2,mesh3);
 const meshes= [mesh1,mesh2,mesh3];
 
 //particles
-const particlescount =200;
+const particlescount =500;
 const position= new Float32Array(particlescount);
 for(let i = 0; i < particlescount; i++) { 
       position[i * 3 + 0]= (Math.random() - 0.5) * 10;
@@ -119,9 +120,29 @@ window.addEventListener('resize', () => {
 
 // scrollvalue
 let scrollY= window.scrollY;
+
+//this is for spining the current object at current section
+let currentMeshsection= 0;
+
 window.addEventListener('scroll',()=>{
   scrollY= window.scrollY;
   // console.log(scrollY)
+
+  const newSection= Math.round(scrollY/ window.innerHeight);
+
+   if(newSection != currentMeshsection){
+    currentMeshsection = newSection ;
+    gsap.to(meshes[currentMeshsection].rotation,
+      {
+        duration:1.5,
+        ease: "power2.inOut",
+        x: "+=6",
+        y: "+=3",
+        z: "+=1.5"
+      }
+    )
+   }
+  // console.log(currentMeshsection )
 })
 
 //parallax effects using mouse
@@ -156,8 +177,8 @@ function animate() {
   cameraGroup.position.x +=(parallaxX - cameraGroup.position.x) * 5 * deltaTime;
 
   for(const mesh of meshes){
-     mesh.rotation.y = elapsedTime * 0.1;
-     mesh.rotation.x = elapsedTime * 0.18;
+     mesh.rotation.y += deltaTime * 0.1;
+     mesh.rotation.x += deltaTime * 0.18;
   }
 
   renderer.render(scene, camera);
