@@ -32,7 +32,7 @@ renderer.domElement.classList.add("webgl");
 // controls.enableDamping=true;
 
 const parameter = {
-  materialColor : "#ffffff"
+  materialColor : "#f5f3f3"
 }
 
 //texture
@@ -76,7 +76,7 @@ scene.add(mesh1,mesh2,mesh3);
 const meshes= [mesh1,mesh2,mesh3];
 
 //particles
-const particlescount =500;
+const particlescount =1000;
 const position= new Float32Array(particlescount);
 for(let i = 0; i < particlescount; i++) { 
       position[i * 3 + 0]= (Math.random() - 0.5) * 10;
