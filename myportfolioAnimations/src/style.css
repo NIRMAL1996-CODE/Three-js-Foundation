@@ -4,9 +4,15 @@
   box-sizing: border-box;
 }
 
+html{
+  background: #1e1a20;
+}
 html,body{
   height: 100%;
   width: 100%;
+}
+body{
+  color: antiquewhite;
 }
 .webgl {
   position: fixed;
@@ -16,12 +22,26 @@ html,body{
   height: 100vh;
   z-index: 1;
 }
+
 .div1, .div2, .div3 {
-  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
   z-index: 2;
+    position: relative; 
 }
-/* body{
-  overflow: hidden;
-} */
+
+.div1, .div3 {
+  justify-content: flex-start;   /* left */
+  padding-left: 50px;
+}
+
+.div2 {
+  justify-content: flex-end;     /* right */
+  padding-right: 50px;
+}
+h1{
+  font-size: 100px;
+}
  
 
