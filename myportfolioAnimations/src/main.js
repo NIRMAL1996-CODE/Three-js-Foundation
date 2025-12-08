@@ -25,21 +25,62 @@ renderer.domElement.classList.add("webgl");
 // const controls = new OrbitControls(camera, renderer.domElement);
 // controls.enableDamping=true;
 
-// object
-const cube = new THREE.Mesh(
-  new THREE.BoxGeometry(),
-  new THREE.MeshBasicMaterial({ color: 0x00aaff })
-);
-scene.add(cube);
+const parameter = {
+  materialColor : "#ffffff"
+}
+
+//texture
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load('/img3.png');
+texture.magFilter= THREE.NearestFilter
+
+// objects
+
+//materials
+const material =new THREE.MeshToonMaterial({color:parameter.materialColor,gradientMap:texture});
+
+// meshes
+const mesh1 = new THREE.Mesh(
+  new THREE.TorusGeometry(1,0.4,16, 60),
+  material
+)
+const mesh2 = new THREE.Mesh(
+  new THREE.ConeGeometry(1,2,32),
+  material
+)
+const mesh3 = new THREE.Mesh(
+  new THREE.TorusGeometry(0.8,0.35,100, 16),
+  material
+)
+
+//object distance 
+
+const objectDistance= 4; 
+
+mesh1.position.y= -  objectDistance *0
+mesh2.position.y= - objectDistance *1
+mesh3.position.y= - objectDistance *2
+
+mesh1.position.x= 2
+mesh2.position.x= -2
+mesh3.position.x= 2
+
+scene.add(mesh1,mesh2,mesh3);
+
+const meshes= [mesh1,mesh2,mesh3];
+
+//light
+const directionalLights= new THREE.DirectionalLight('#ffffff',2);
+directionalLights.position.set(1,1,0)
+scene.add(directionalLights)
 
 //lil-gui
 const gui = new GUI();
 
-const parameter = {
-  materialColor : "#ffeded"
-}
-gui.add(cube.material, 'wireframe');
-gui.addColor(parameter,"materialColor");
+gui.addColor(parameter,"materialColor")
+.onChange(()=>{
+  material.color.set(parameter.materialColor)
+});
 
 // responsive resize
 window.addEventListener('resize', () => {
@@ -48,10 +89,25 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+// scrollvalue
+let scrollY= window.scrollY;
+window.addEventListener('scroll',()=>{
+  scrollY= window.scrollY;
+  // console.log(scrollY)
+})
+
+//clock
+const clock = new THREE.Clock();
+
 // animation
 function animate() {
+  const elapsedTime= clock.getElapsedTime()
   requestAnimationFrame(animate);
-  cube.rotation.y += 0.01;
+  for(const mesh of meshes){
+     mesh.rotation.y = elapsedTime * 0.1;
+     mesh.rotation.x = elapsedTime * 0.18;
+  }
+   camera.position.y= -scrollY/ window.innerHeight * objectDistance  
   renderer.render(scene, camera);
 }
 animate();
