@@ -28,7 +28,7 @@ const light = new THREE.DirectionalLight(0xffffff, 4);
 light.position.set(5, 5, 5);
 scene.add(light);
 
-const fillLight = new THREE.DirectionalLight(0xffffff, 2); // second light to remove darkness
+const fillLight = new THREE.DirectionalLight(0xffffff, 4); // second light to remove darkness
 fillLight.position.set(-5, 5, 5);
 scene.add(fillLight);
 
@@ -38,10 +38,10 @@ scene.add(ambient);
 const loader = new GLTFLoader();
 
 let model; 
-loader.load("/img2.glb", (gltf) => {
+loader.load("/img1.glb", (gltf) => {
    model = gltf.scene;
-  model.scale.set(0.01, 0.01, 0.01);   // adjust if too big
-   model.position.set(0, -1, 0);  
+  model.scale.set(0.5, 0.5, 0.5);   // adjust if too big
+   model.position.set(0, -0.5, 0);  
   scene.add(model);
 });
 
@@ -57,12 +57,12 @@ function animate() {
   controls.update();
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
-  // if (model) {  
-  // model.rotation.y = mouseX;  // left-right
-  // model.rotation.x = mouseY;  // up-down
-  // }
+  if (model) {  
+  model.rotation.y = mouseX;  // left-right
+  model.rotation.x = mouseY;  // up-down
+  }
   // model.rotation.x +=0.01
-  model.rotation.y += 0.01
+  // model.rotation.y += 0.01
 
 }
 animate();
