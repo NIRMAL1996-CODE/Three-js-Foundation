@@ -4,7 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x000000);
+scene.background = new THREE.Color(0xffffff);
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
@@ -13,7 +13,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(0, 0, 3);
+camera.position.set(0, 0, 3.5);
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -24,20 +24,24 @@ document.body.appendChild(renderer.domElement);
 const controls= new OrbitControls(camera, renderer.domElement);
 controls.enableDamping=true;
 
-const light = new THREE.DirectionalLight(0xffffff, 2);
-light.position.set(2, 2, 2);
+const light = new THREE.DirectionalLight(0xffffff, 4);
+light.position.set(5, 5, 5);
 scene.add(light);
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+const fillLight = new THREE.DirectionalLight(0xffffff, 2); // second light to remove darkness
+fillLight.position.set(-5, 5, 5);
+scene.add(fillLight);
+
+const ambient = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambient);
 
 const loader = new GLTFLoader();
 
 let model; 
-loader.load("/eye.glb", (gltf) => {
+loader.load("/img2.glb", (gltf) => {
    model = gltf.scene;
   model.scale.set(0.01, 0.01, 0.01);   // adjust if too big
-   model.position.set(0, 0, 0);  
+   model.position.set(0, -1, 0);  
   scene.add(model);
 });
 
@@ -53,9 +57,12 @@ function animate() {
   controls.update();
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
-  if (model) {  
-  model.rotation.y = mouseX;  // left-right
-  model.rotation.x = mouseY;  // up-down
-  }
+  // if (model) {  
+  // model.rotation.y = mouseX;  // left-right
+  // model.rotation.x = mouseY;  // up-down
+  // }
+  // model.rotation.x +=0.01
+  model.rotation.y += 0.01
+
 }
 animate();
