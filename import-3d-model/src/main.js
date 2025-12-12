@@ -4,6 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x000000);
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
@@ -40,25 +41,21 @@ loader.load("/eye.glb", (gltf) => {
   scene.add(model);
 });
 
-// let mouseX = 0;
-// let mouseY = 0;
+let mouseX = 0;
+let mouseY = 0;
 
-// window.addEventListener("mousemove", (e) => {
-//   mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-//   mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-// });
 window.addEventListener('mousemove', (event) => {
-  event.x = (event.clientX / window.innerWidth) * 2 - 1;
-  event.y = - (event.clientY / window.innerHeight) * 2 + 1;
+  mouseX = -3 + (event.clientX / window.innerWidth) * 3;
+  mouseY = -1.2 + (event.clientY *2.5 / window.innerHeight) ;
 });
 
 function animate() {
   controls.update();
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
-//     if (model) {
-//   model.rotation.y = mouseX;  // left-right
-//   model.rotation.x = mouseY;  // up-down
-// }
+  if (model) {  
+  model.rotation.y = mouseX;  // left-right
+  model.rotation.x = mouseY;  // up-down
+  }
 }
 animate();

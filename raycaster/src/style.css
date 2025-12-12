@@ -11,3 +11,6 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+body{
+  background-color: rgba(107, 6, 6, 0.924);
+}
