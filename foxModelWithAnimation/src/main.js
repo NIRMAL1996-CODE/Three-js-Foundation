@@ -52,8 +52,8 @@ const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
   controls.update()
-  const deltaTime = clock.getDelta(); // add clock = new THREE.Clock() at top
-  if (mixer) mixer.update(deltaTime);
+  const delta = clock.getDelta(); // add clock = new THREE.Clock() at top
+  if (mixer) mixer.update(delta);
   renderer.render(scene, camera);
 }
 animate();
