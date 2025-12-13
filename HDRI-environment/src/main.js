@@ -44,7 +44,7 @@ let model;
 glftloader.load("/girl.glb", (gltf) => {
    model = gltf.scene;
    model.scale.set(1, 1, 1);   // adjust if too big
-   model.position.set(0, -1, 0);  
+   model.position.set(0, -1, 0);  //girl
   scene.add(model);
 });
 
