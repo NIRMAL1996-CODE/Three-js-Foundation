@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { GroundedSkybox } from "three/addons/objects/GroundedSkybox.js";
 import GUI from 'lil-gui';
 // Scene
 const scene = new THREE.Scene();
@@ -14,7 +15,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(0, 0, 2);
+camera.position.set(0, 1, 5);
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -25,14 +26,26 @@ document.body.appendChild(renderer.domElement);
 
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping=true;
 
+// GroundedSkybox is a Three.js helper that shows an HDR sky with a fake ground so the horizon looks natural instead of floating.
+// (fake = only visual, not real floor)
+
+// What it does:
+// Uses HDRI for realistic sky + light
+// Adds a flat-looking ground under the sky
+// Creates a clear horizon line
 // HDRI Environment
-new RGBELoader().load("/sky.hdr",
+new RGBELoader().load("/ground.hdr",
   (hdri) => {
     hdri.mapping = THREE.EquirectangularReflectionMapping;
+     const skybox = new GroundedSkybox(hdri, 15, 70);
+    //  skybox.material.wireframe= true
+     skybox.position.y =15;
+   
+     scene.add(skybox);
     scene.environment = hdri;
-    scene.background = hdri;
-    
+    // scene.background = hdri;
   }
 );
 
@@ -44,7 +57,7 @@ let model;
 glftloader.load("/girl.glb", (gltf) => {
    model = gltf.scene;
    model.scale.set(1, 1, 1);   // adjust if too big
-   model.position.set(0, -1, 0);  //girl
+  //  model.position.set(0, -1, 0);  //girl
   scene.add(model);
 });
 
