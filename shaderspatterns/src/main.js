@@ -1,8 +1,9 @@
 import './style.css'
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-// import vertexShader from "./shaders/vertex.glsl";
-// import fragmentShader from "./shaders/fragment.glsl";
+import vertexShader from "./shaders/vertexShader.glsl";
+import fragmentShader from "./shaders/fragmentShader.glsl";
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -11,18 +12,18 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
 
-const loader = new THREE.TextureLoader();
-let texture= loader.load('wood.jpeg');
+// const loader = new THREE.TextureLoader();
+// let texture= loader.load('wood.jpeg');
 
 const geometry = new THREE.BoxGeometry(2, 2, 2);
 const material = new THREE.ShaderMaterial(
-  // {
-//  vertexShader,
-//  fragmentShader,
+  {
+ vertexShader
+,fragmentShader
 //  uniforms:{
 //   uTexture: {value: texture}
 //  }
-// }
+}
 );
 
 const mesh = new THREE.Mesh(geometry, material);
