@@ -346,4 +346,43 @@ gl_FragColor = texture2D(uTexture, vUv);
 * Each intersection = a coordinate (u,v)
 * Shader uses UV to color/texture each pixel
 
+-------------
+# UV Interpolation Notes (Short & Easy)
+
+## What happens
+
+* Each vertex has its own `vUv` value (0 → 1)
+* GPU **automatically interpolates** between vertices for all pixels (fragments)
+* This creates smooth gradients or texture mapping without manual values
+
+## Example
+
+* Plane with 2×2 segments → 9 vertices
+* Left vertex `vUv.x = 0.0`
+* Right vertex `vUv.x = 1.0`
+* Pixels in between GPU calculates automatically: 0.1, 0.2, 0.3 …
+
+## Why it works
+
+* `float strength = vUv.x;` → stores per-vertex UV
+* `gl_FragColor = vec4(vec3(strength), 1.0);` → uses interpolated value per fragment
+
+## Kid version
+
+* Vertices = dots with numbers
+* GPU = fills the gaps smoothly like **connecting dots with a pencil**
+
+## My Version Code Example
+
+```glsl
+varying vec2 vUv;
+
+void main() {
+    float strength = vUv.x;          // per-vertex value
+    vec3 gray = vec3(strength);      // convert to RGB
+    gl_FragColor = vec4(gray, 1.0);  // final color
+}
+```
+
+
 
