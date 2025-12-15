@@ -6,6 +6,7 @@ import fragmentShader from "./shaders/fragmentShader.glsl";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 1;
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -15,11 +16,12 @@ document.body.appendChild(renderer.domElement);
 // const loader = new THREE.TextureLoader();
 // let texture= loader.load('wood.jpeg');
 
-const geometry = new THREE.BoxGeometry(2, 2, 2);
+const geometry = new THREE.PlaneGeometry(1, 1, 30,30);
 const material = new THREE.ShaderMaterial(
   {
- vertexShader
-,fragmentShader
+   side : THREE.DoubleSide,
+    vertexShader
+    ,fragmentShader
 //  uniforms:{
 //   uTexture: {value: texture}
 //  }
@@ -28,7 +30,6 @@ const material = new THREE.ShaderMaterial(
 
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
-camera.position.z = 5;
 
 const controls = new OrbitControls( camera, renderer.domElement );
 controls.enableDamping= true;
@@ -43,8 +44,8 @@ window.addEventListener("resize",function(e){
 function animate () {
   requestAnimationFrame(animate);
   controls.update();
-  mesh.rotation.y+=0.01;
-  mesh.rotation.x+=0.01;
+  // mesh.rotation.y+=0.01;
+  // mesh.rotation.x+=0.01;
 
   renderer.render(scene, camera);
 };

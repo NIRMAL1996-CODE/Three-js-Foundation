@@ -276,5 +276,74 @@ Uses image as color.
 
 ---
 
+# UV Notes (Very Easy)
+
+## What is UV?
+
+* UV = 2D coordinates for **mapping textures** on 3D objects
+* `u` = horizontal (left → right)
+* `v` = vertical (bottom → top)
+* Always **range 0.0 → 1.0**
+
+---
+
+## Where UV comes from
+
+* Geometry (Plane, Box, etc.) **automatically generates UVs**
+* Vertex shader can access UV as `uv` (predefined)
+* To send UV to fragment shader, use `varying`:
+
+```glsl
+varying vec2 vUv;
+vUv = uv;
+```
+
+---
+
+## How UV values are distributed
+
+* Corners have fixed UVs:
+
+  * Bottom-left → (0,0)
+  * Bottom-right → (1,0)
+  * Top-left → (0,1)
+  * Top-right → (1,1)
+* Middle points depend on **segments**
+
+  * Example: 2×2 grid (4 squares → 9 vertices)
+
+    * Center → (0.5,0.5)
+* UV is **normalized** (0 → 1)
+
+---
+
+## How to use UV in fragment shader
+
+### 1. Gradient color
+
+```glsl
+gl_FragColor = vec4(vUv, 0.0, 1.0);
+```
+
+* u → red, v → green
+* Creates smooth gradient
+
+### 2. Texture mapping
+
+```glsl
+uniform sampler2D uTexture;
+gl_FragColor = texture2D(uTexture, vUv);
+```
+
+* vUv decides **which part of image goes to vertex**
+* GPU interpolates UV for all pixels between vertices
+
+---
+
+## Kid analogy 🧒
+
+* UV = map/grid on plane
+* Each intersection = a coordinate (u,v)
+* Shader uses UV to color/texture each pixel
 
 
