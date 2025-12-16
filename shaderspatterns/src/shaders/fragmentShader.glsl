@@ -28,30 +28,94 @@ void main() {
    //float strength = mod(vUv.y * 10.0 ,1.0); // repeats every 1 unit
    //gl_FragColor = vec4(strength,strength,strength, 1.0);
 
-   //pattern 5
+   //pattern 6
    //float strength = mod(vUv.x * 10.0 ,1.0); 
    //strength =step(0.5, strength);
    //gl_FragColor = vec4(strength,strength,strength, 1.0);
 
-    //pattern 6
+    //pattern 7
     //float strength = mod(vUv.x * 10.0 ,1.0); 
     //strength =step(0.8, strength);
     //gl_FragColor = vec4(strength,strength,strength, 1.0);
 
-     //pattern 6
+     //pattern 8
     // float strength = step(0.8,mod(vUv.x * 10.0 ,1.0)); 
     // strength += step(0.8,mod(vUv.y * 10.0 ,1.0)); 
     // gl_FragColor = vec4(strength,strength,strength, 1.0);
 
-    //pattern 7
+    //pattern 9
     //float strength = step(0.8,mod(vUv.x * 10.0 ,1.0)); 
     //strength *= step(0.8,mod(vUv.y * 10.0 ,1.0)); 
     //gl_FragColor = vec4(strength,strength,strength, 1.0);
 
-    //pattern 8
-   float strength = step(0.4,mod(vUv.x * 10.0 ,1.0)); 
-   strength *= step(0.8,mod(vUv.y * 10.0 ,1.0)); 
-   gl_FragColor = vec4(strength,strength,strength, 1.0);
+    //pattern 10
+   // float strength = step(0.4,mod(vUv.x * 10.0 ,1.0)); 
+   // strength *= step(0.8,mod(vUv.y * 10.0 ,1.0)); 
+   // gl_FragColor = vec4(strength,strength,strength, 1.0);
 
+    //pattern 11
+   // float barX = step(0.4,mod(vUv.x * 10.0 ,1.0)); 
+   // barX *= step(0.8,mod(vUv.y * 10.0 ,1.0)); 
+
+   // float barY = step(0.8,mod(vUv.x * 10.0 ,1.0)); 
+   // barY *= step(0.4,mod(vUv.y * 10.0 ,1.0)); 
+
+   // float strength = barX + barY;
+   // gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   //pattern 12
+   // float barX = step(0.4,mod(vUv.x * 10.0  ,1.0)); 
+   // barX *= step(0.8,mod(vUv.y * 10.0 +0.2 ,1.0)); 
+
+   // float barY = step(0.8,mod(vUv.x * 10.0 + 0.2 ,1.0)); 
+   // barY *= step(0.4,mod(vUv.y * 10.0 ,1.0)); 
+
+   // float strength = barX + barY;
+   // gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   //pattern 13
+   // float strength= min(abs(vUv.x - 0.5) ,abs(vUv.y - 0.5));
+   //  gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   //pattern 14
+   // float box1= step(0.2, max(abs(vUv.x - 0.5) ,abs(vUv.y - 0.5)));
+   // float box2= 1.0 - step(0.25, max(abs(vUv.x - 0.5) ,abs(vUv.y - 0.5)));
+   //  float strength =box1 * box2;
+   //  gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   //pattern 15 gradientcolor divide by lineshadow make small box gradient
+   // float strength =floor( vUv.x *10.0) / 10.0;
+   // strength *= floor( vUv.y *10.0) / 10.0;
+   //  gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   //pattern 16 mid black whole with two methods
+   // float strength = length(vUv -0.5);
+   //    float strength = distance(vUv, vec2(0.5));
+   //  gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   //pattern 17 mid bright other in little dark
+   // float strength = 1.0 -distance(vUv, vec2(0.5));
+   //  gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   //pattern 18 mid bright other whole thing is dark
+   // float strength =0.015 / distance(vUv, vec2(0.5));
+   //  gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   //patter 19
+   // vec2 lightvuv = vec2(vUv.x * 0.1 + 0.45, vUv.y * 0.5 + 0.25);
+
+   // float strength =0.015 / distance(lightvuv, vec2(0.5));
+   //  gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+    //patter 20 star in mid other whole thing is dark
+   // vec2 lightvuvX = vec2(vUv.x * 0.1 + 0.45, vUv.y * 0.5 + 0.25);
+   // float lightX = 0.015 / distance(lightvuvX, vec2(0.5));
+
+   // vec2 lightvuvY = vec2(vUv.y * 0.1 + 0.45, vUv.x * 0.5 + 0.25);
+   // float lightY = 0.015 / distance(lightvuvY, vec2(0.5));
+
+   // float strength =lightX * lightY;
+   //  gl_FragColor = vec4(strength,strength,strength, 1.0);
+   
 
 }
