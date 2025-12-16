@@ -1,6 +1,7 @@
 // color based on vertex position
 varying vec3 vPosition;
 varying vec2 vUv;
+#define PI 3.14159265359
 
 void main() {
      //pattern 1
@@ -116,6 +117,53 @@ void main() {
 
    // float strength =lightX * lightY;
    //  gl_FragColor = vec4(strength,strength,strength, 1.0);
-   
+
+   // pattern 21 circle ring in plane
+      // float strength = step(0.01,abs(distance(vUv, vec2(0.5))-0.25));
+      // gl_FragColor = vec4(strength,strength,strength, 1.0);
+
+   // pattern 21 zigzag ring the plane black 
+      // vec2 waveuv = vec2(vUv.x , vUv.y + sin(vUv.x * 30.0)* 0.01);
+      // float strength =1.0 - step(0.01,abs(distance(waveuv, vec2(0.5))-0.25));
+      // gl_FragColor = vec4(strength,strength,strength, 1.0);   
+
+    // pattern 22 zigzag ring the plane black 
+      // vec2 waveuv = vec2(
+      //    vUv.x + sin(vUv.y * 30.0)* 0.1 ,
+      //    vUv.y + sin(vUv.x * 30.0)* 0.1);
+      // float strength =1.0 - step(0.01,abs(distance(waveuv, vec2(0.5))-0.25));
+      // gl_FragColor = vec4(strength,strength,strength, 1.0);   
+
+      // pattern 23 zigzag pattern the plane black 
+      // vec2 waveuv = vec2(
+      //    vUv.x + sin(vUv.y * 100.0)* 0.1 ,
+      //    vUv.y + sin(vUv.x * 100.0)* 0.1);
+      // float strength =1.0 - step(0.01,abs(distance(waveuv, vec2(0.5))-0.25));
+      // gl_FragColor = vec4(strength,strength,strength, 1.0);    
+
+      // pattern 24 angle gray gradient the plane black 
+      //  float angle = atan(vUv.x -0.5, vUv.y -0.5);
+      //  angle /= PI* 2.0;
+      //  angle += 0.5;
+      //  float strength = angle;
+      // gl_FragColor = vec4(strength,strength,strength, 1.0); 
+
+       // pattern 26 angle cuts pattern the plane black 
+       float angle = atan(vUv.x -0.5, vUv.y -0.5);
+       angle /= PI* 2.0;
+       angle += 0.5;
+       angle *= 20.0;
+       angle =mod(angle, 1.0);
+       float strength = angle;
+      gl_FragColor = vec4(strength,strength,strength, 1.0); 
+
+       // pattern 27 angle cuts pattern the plane black 
+      //  float angle = atan(vUv.x -0.5, vUv.y -0.5);
+
+      //  angle /= PI* 2.0;
+      //  angle += 0.5;
+
+      //  float strength = sin(angle * 100.0);
+      // gl_FragColor = vec4(strength,strength,strength, 1.0); 
 
 }
