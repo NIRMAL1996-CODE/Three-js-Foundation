@@ -39,6 +39,7 @@ scene.add(sea);
 // Animate
 const clock = new THREE.Clock();
 function animate() {
+  controls.update();
   material.uniforms.uTime.value = clock.getElapsedTime();
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
